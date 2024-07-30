@@ -1,6 +1,7 @@
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 from sentence_transformers import SentenceTransformer
+from tqdm import tqdm
 
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
@@ -17,10 +18,8 @@ except Exception as e:
 db = client.sample_mflix
 collection = db.movies
 
-docs = collection.find({"plot" : {"$exists" : True}}).limit(500) # find 500 docs in the dataset
+docs = collection.find({"plot" : {"$exists" : True}}).limit(2000) # find 500 docs in the dataset
 
-for doc in docs:
+for doc in tqdm(docs):
     doc["plot_embedding_hf"] = model.encode(doc["plot"]).tolist()
-    print(doc["_id"])
     collection.replace_one({"_id" : doc["_id"]}, doc)
-
