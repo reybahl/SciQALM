@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
-uri = "mongodb+srv://bahlreyansh:OLRgjshrXD3GN0MW@cluster0.ivvpa83.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+uri = open("../mongodburl.txt").read()
 # Create a new client and connect to the server
 client = MongoClient(uri, server_api=ServerApi('1'))
 # Send a ping to confirm a successful connection

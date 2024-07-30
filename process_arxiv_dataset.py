@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 df = pd.read_json("hf://datasets/gfissore/arxiv-abstracts-2021/arxiv-abstracts.jsonl.gz", lines=True, chunksize=500)
-uri = "mongodb+srv://bahlreyansh:OLRgjshrXD3GN0MW@cluster0.ivvpa83.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+uri = open("mongodburl.txt").read()
 
 client = MongoClient(uri, server_api=ServerApi('1'))
 db = client.arxiv
