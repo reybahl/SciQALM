@@ -13,8 +13,7 @@ def prompt(query):
     prompt_in_chat_format = [
         {
             "role": "system",
-            "content": """Using only the information contained in the context,
-    give a comprehensive answer to the question. Use information from only one of the given movie plots to answer the question. Do not use any outside or other information.
+            "content": """Use information from only one of the given movie plots to answer the question. Do not use any outside or other information.
     Respond only to the question asked, response should be concise and relevant to the question.
     Provide the title of the source movie, then provide the answer.
     If the answer cannot be deduced from the context, do not give an answer.""",
@@ -34,12 +33,15 @@ def prompt(query):
     final_prompt = prompt_in_chat_format
     final_prompt[1]["content"] = final_prompt[1]["content"].format(question = query, context=context)
 
+    ans = ""
     for message in client.chat_completion(
 	messages=final_prompt,
 	max_tokens=500,
 	stream=True,
 ):
-        print(message.choices[0].delta.content, end="")
+        ans += message.choices[0].delta.content
+    
+    return ans
 
 # prompt("who is the world's most super-bad turned super-dad?")
 # prompt("Who do earth's mightiest heroes have to fight against?")
