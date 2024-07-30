@@ -18,7 +18,7 @@ except Exception as e:
 db = client.sample_mflix
 collection = db.movies
 
-docs = collection.find({"plot" : {"$exists" : True}}).limit(2000) # find 500 docs in the dataset
+docs = collection.find({"plot" : {"$exists" : True}}).limit(20000) # find 2000 docs in the dataset
 
 for doc in tqdm(docs):
     doc["plot_embedding_hf"] = model.encode(doc["plot"]).tolist()

@@ -9,19 +9,24 @@ client = MongoClient(uri, server_api=ServerApi('1'))
 db = client.sample_mflix
 collection = db.movies
 
-query = "superhero team saves the world from danger"
+def generate_context(query):
+    # query = "who does Space hero Daffy battle for control of planet x"
 
-results = collection.aggregate([
-    {
-        "$vectorSearch" : {
-            "queryVector" : model.encode(query).tolist(),
-            "path" : "plot_embedding_hf",
-            "numCandidates" : 2000,
-            "limit" : 10,
-            "index" : "PlotSemanticSearch"
+    results = collection.aggregate([
+        {
+            "$vectorSearch" : {
+                "queryVector" : model.encode(query).tolist(),
+                "path" : "plot_embedding_hf",
+                "numCandidates" : 2000,
+                "limit" : 10,
+                "index" : "PlotSemanticSearch"
+            }
         }
-    }
-])
+    ])
 
-for document in results:
-    print(f"Movie Name: {document['title']}\nMovie Plot: {document['plot']}\n\n")
+    context = ""
+
+    for document in results:
+        context += f"Movie Name: {document['title']}\nMovie Plot: {document['plot']}\n\n"
+
+    return context
