@@ -2,7 +2,7 @@ from huggingface_hub import InferenceClient
 
 from vector_search import generate_context
 
-token = open("api_token.txt").read()
+token = open("../api_token.txt").read()
 
 client = InferenceClient(
     "HuggingFaceH4/zephyr-7b-beta",
