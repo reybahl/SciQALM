@@ -16,7 +16,7 @@ def prompt(query):
             "content": """Use information from only one of the given movie plots to answer the question. Do not use any outside or other information.
     Respond only to the question asked, response should be concise and relevant to the question.
     Provide the title of the source movie, then provide the answer.
-    If the answer cannot be deduced from the context, do not give an answer.""",
+    If the answer cannot be deduced from the context, do not give an answer. Again, do NOT use information that is not given in the context.""",
         },
         {
             "role": "user",
